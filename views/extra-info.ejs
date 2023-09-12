@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DreamSignage</title>
+  <link rel="icon" type="image/x-icon" href="/img/DreamSignage-Logo-Light-Icon.ico">
+  <script src="js/pdf.js"></script>
+  <script src="js/anime.min.js"></script>
+  <script src='/socket.io/socket.io.js'></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/extra-info.css">
+
+</head>
+
+<body>
+  <div id="mainbar">
+    <div id="content-display">
+      <object id="content-display-obj" data="" width="100%" height="100%">
+        <embed id="content-display-embed" src="" width="100%" height="100%"> </embed>
+      </object>
+    </div>
+  </div>
+  <div id="sidebar">
+    <div id="sidebar-card">
+
+    </div>
+  </div>
+</body>
+
+<script>
+  var socket = io();
+  console.log(location.origin);
+  document.getElementById("content-display-obj").setAttribute("data", location.origin);
+  document.getElementById("content-display-embed").setAttribute("src", location.origin);
+
+
+  window.addEventListener("load", updateLayout);
+  window.addEventListener("resize", updateLayout);
+
+  function updateLayout() {
+    const sidebar = document.getElementById('sidebar');
+    const mainbar = document.getElementById('mainbar');
+    const contentDisplay = document.getElementById('content-display');
+
+    const sidebarWidth = sidebar.offsetWidth;
+    const windowAspectRatio = window.innerWidth / window.innerHeight;
+
+    // Update the dimensions of mainbar and content-display
+    mainbar.style.height = `${window.innerHeight}px`;
+    mainbar.style.width = `${window.innerWidth - sidebarWidth}px`;
+
+    const mainbarAspectRatio = mainbar.offsetWidth / mainbar.offsetHeight;
+    if (mainbarAspectRatio > windowAspectRatio) {
+      // The mainbar is wider than the aspect ratio, so limit the width
+      contentDisplay.style.width = `${window.innerHeight * windowAspectRatio}px`;
+      contentDisplay.style.height = `${window.innerHeight}px`;
+    } else {
+      // The mainbar is taller than the aspect ratio, so limit the height
+      contentDisplay.style.width = `${window.innerWidth - sidebarWidth}px`;
+      contentDisplay.style.height = `${(window.innerWidth - sidebarWidth) / windowAspectRatio}px`;
+    }
+  }
+</script>
+
+</html>

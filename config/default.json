@@ -1,0 +1,16 @@
+{
+    "config": { 
+        "scanIntervall": 5,
+        "contentIntervall": 5,
+        "backgroundColor": "#141414",
+        "httpPort": 3000,
+        "useSSL": false,
+        "sslkey": "/etc/example/privatekey.pem",
+        "sslCert": "/etc/example/fullchain.pem",
+        "sslPort": 3001,
+        "useZipDownload": true,
+        "zipURL": "http://content.dreamsignage.de/content.zip",
+        "zipDownloadIntervall": 60,
+        "keepUnchangedFiles": false
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "config": "^3.3.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "delay": "^5.0.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "node-fetch": "^2.7.0",
+    "socket.io": "^4.5.1"
+  },
+  "name": "ds",
+  "version": "1.0.0",
+  "description": "DreamSignage web application",
+  "main": "ds.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aurelio Brenker",
+  "license": "ISC"
+}
