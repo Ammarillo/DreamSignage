@@ -180,14 +180,14 @@ In order for the changes you made in `default.json` to take effect, you need to 
 Whenever you want to change the content being displayed, simply replace the files in the `content` folder with the new content you want to show. The application will automatically pick up these new files.
 <br>That's it! You now know how to use the DreamSignage application.
 
-### Optional URL ZIP Download Feature
+## Optional URL ZIP Download Feature
 DreamSignage provides an optional feature that allows users to automatically download content from a remote server via a ZIP file. This feature is particularly useful for users who want to centralize and easily update the content displayed across multiple DreamSignage installations. By simply updating the ZIP file on a remote server, all DreamSignage installations configured to fetch from that server will automatically update their content.
-## How the ZIP Download Feature Works
+### How the ZIP Download Feature Works
 **1. Configuration:** In the `default.json` file located inside the `config` folder, there are a few settings related to the ZIP download feature. The `"useZipDownload"` setting determines whether the feature is active. If set to `true`, DreamSignage will attempt to download content from the URL specified in the `"zipURL"` setting.<br>
 **2. Automatic Downloads:** When the ZIP download feature is active, DreamSignage will periodically check the remote server for updates based on the `"zipDownloadIntervall"` setting (specified in minutes). If a new ZIP file is detected, it will be downloaded and extracted automatically, updating the content displayed by DreamSignage.<br>
 **3. Content Overwrite:** Each time a new ZIP file is downloaded, the existing content in the `public/content` folder will be overwritten with the new content from the ZIP file. It's important to note that any manual changes or additions to the `public/content` folder will be lost when a new ZIP is downloaded. You can disable this by changing `keepUnchangedFiles` to `true`.<br>
 
-## Configuring the ZIP Download Feature
+### Configuring the ZIP Download Feature
 To activate and configure the ZIP download feature:<br>
 **1.** Open the `default.json` file in the `config` folder.<br>
 **2.** Set the `"useZipDownload"` setting to `true`.<br>
