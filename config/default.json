@@ -11,6 +11,6 @@
         "useZipDownload": false,
         "zipURL": "http://example.de/example-content.zip",
         "zipDownloadIntervall": 60,
-        "keepFiles": true
+        "keepFiles": false
     }
 }
