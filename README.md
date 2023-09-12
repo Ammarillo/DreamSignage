@@ -11,6 +11,7 @@ From PDF, PNG, JPG/JPEG, GIF, SVG, WebP, MP4, to WebM, DreamSignage offers an in
 - **Multi-Site PDF Viewing:** DreamSignage provides a comfortable reading experience by displaying PDF files one page at a time.
 - **Configurable Timer Display:** Adjust the display duration of files to fit your needs with a configurable timer.
 - **Offline & Local Network Capability:** DreamSignage can operate fully offline within a local network.
+- **Automatic ZIP Content Updates:** DreamSignage offers a unique feature to automatically fetch and update content from a remote ZIP file. Centralize your content updates with ease, as DreamSignage periodically checks, downloads, and seamlessly integrates new content from your specified ZIP source, ensuring your displays always stay current.
 - **Websockets Integration:** By utilizing websockets, DreamSignage promptly reacts to file events, updating content automatically with each file change.
 - **Cross-Platform Server Deployment:** The DreamSignage server can be deployed on both Linux and Windows platforms, ensuring comprehensive compatibility.
 - **HTTPS Support:** DreamSignage offers the capability to run securely over HTTPS. This optional feature enables hosting of content with enhanced security, ensuring data is safely transmitted over the network. Elevate your experience with DreamSignage by utilizing the power of HTTPS.
@@ -178,3 +179,19 @@ In order for the changes you made in `default.json` to take effect, you need to 
 ### Step 6: Updating your Content
 Whenever you want to change the content being displayed, simply replace the files in the `content` folder with the new content you want to show. The application will automatically pick up these new files.
 <br>That's it! You now know how to use the DreamSignage application.
+
+### Optional URL ZIP Download Feature
+DreamSignage provides an optional feature that allows users to automatically download content from a remote server via a ZIP file. This feature is particularly useful for users who want to centralize and easily update the content displayed across multiple DreamSignage installations. By simply updating the ZIP file on a remote server, all DreamSignage installations configured to fetch from that server will automatically update their content.
+## How the ZIP Download Feature Works
+**1. Configuration:** In the `default.json` file located inside the `config` folder, there are a few settings related to the ZIP download feature. The `"useZipDownload"` setting determines whether the feature is active. If set to `true`, DreamSignage will attempt to download content from the URL specified in the `"zipURL"` setting.<br>
+**2. Automatic Downloads:** When the ZIP download feature is active, DreamSignage will periodically check the remote server for updates based on the `"zipDownloadIntervall"` setting (specified in minutes). If a new ZIP file is detected, it will be downloaded and extracted automatically, updating the content displayed by DreamSignage.<br>
+**3. Content Overwrite:** Each time a new ZIP file is downloaded, the existing content in the `public/content` folder will be overwritten with the new content from the ZIP file. It's important to note that any manual changes or additions to the `public/content` folder will be lost when a new ZIP is downloaded. You can disable this by changing `keepUnchangedFiles` to `true`.<br>
+
+## Configuring the ZIP Download Feature
+To activate and configure the ZIP download feature:<br>
+**1.** Open the `default.json` file in the `config` folder.<br>
+**2.** Set the `"useZipDownload"` setting to `true`.<br>
+**3.** Provide the URL of the ZIP file in the `"zipURL"` setting. For example: `"zipURL": "https://example.com/path/to/content.zip"`.<br>
+**4.** (Optional) Adjust the `"zipDownloadIntervall"` setting to determine how often DreamSignage should check for updates. The default is set to 60 seconds.<br>
+**5.** (Optional) Change the `"keepFiles"` setting to `true` if you want to keep files which are not inside the ZIP file.<br>
+**6.** Save the `default.json` file and restart the DreamSignage application for the changes to take effect.<br>
