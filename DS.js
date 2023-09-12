@@ -163,7 +163,7 @@ async function downloadAndExtractZip(url, outputPath) {
     console.log('ZIP file content changed!');
   }
 
-  if (!conf.config.keepUnchangedFiles) deleteAllFilesFromFolder('./public/content');
+  if (!conf.config.keepFiles) deleteAllFilesFromFolder('./public/content');
 
   const zip = new AdmZip(zipPath);
   zip.extractAllTo(outputPath, true);
