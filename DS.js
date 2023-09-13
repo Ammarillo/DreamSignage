@@ -5,6 +5,7 @@ const https = require("https");
 const path = require('path');
 const conf = require("config");
 const server = require('http').Server(app);
+const http = require('http');
 const io = conf.config.useSSL 
   ? require('socket.io')(https.createServer({
       key: fs.readFileSync(conf.config.sslkey),
@@ -20,10 +21,12 @@ const sslServer = conf.config.useSSL
 const fetch = require('node-fetch');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
+const { URL } = require('url');
 
 const folder = './public/content/';
 let fileList = [];
 let fileHashes = {}; // To store the previous hash of each file
+let lastModifiedHeader = null;
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, 'public')));
@@ -116,60 +119,64 @@ function computeFileHash(filePath) {
   return hash.digest('hex');
 }
 
-async function computeSHA256(filePath) {
-  return new Promise((resolve, reject) => {
-      const hash = crypto.createHash('sha256');
-      const input = fs.createReadStream(filePath);
+function getPortFromUrl(urlString) {
+  const url = new URL(urlString);
 
-      input.on('readable', () => {
-          const data = input.read();
-          if (data) {
-              hash.update(data);
-          } else {
-              resolve(hash.digest('hex'));
-          }
-      });
+  // If the port is specified in the URL, use it
+  if (url.port) {
+    return parseInt(url.port, 10);
+  }
 
-      input.on('error', reject);
-  });
+  // If not, determine the default port based on the protocol
+  switch (url.protocol) {
+    case 'http:':
+      return 80;
+    case 'https:':
+      return 443;
+    default:
+      throw new Error('Unsupported protocol');
+  }
 }
 
 async function downloadAndExtractZip(url, outputPath) {
-  const response = await fetch(url);
-  const buffer = await response.buffer();
+  const parsedUrl = new URL(url);
+  const port = getPortFromUrl(url);
 
-  // Check if directory exists
-  if (!fs.existsSync(`./public/download/`)) {
-    // If not, create the directory
-    fs.mkdirSync(path, { recursive: true });
-  }
+  const options = {
+    method: 'HEAD',
+    host: parsedUrl.hostname,
+    port: port,
+    path: parsedUrl.pathname
+  };
 
-  const zipPath = `./public/download/temp.zip`;
-  fs.writeFileSync(zipPath, buffer);
+  const requestModule = parsedUrl.protocol === 'https:' ? https : http;
 
-  const currentHash = await computeSHA256(zipPath);
-  let previousHash = null;
+  requestModule.request(options, async (res) => {
+    const newLastModified = res.headers['last-modified'];
 
-  const hashFilePath = `./public/download/hash.txt`;
-  if (fs.existsSync(hashFilePath)) {
-      previousHash = fs.readFileSync(hashFilePath, 'utf8');
-  }
+    if (newLastModified && newLastModified !== lastModifiedHeader) {
+      // ZIP file has potentially changed, download and extract it
+      const response = await fetch(url);
+      const buffer = await response.buffer();
 
-  if (previousHash === currentHash) {
-      //console.log('The ZIP file is the same as before.');
+      // Check if directory exists
+      if (!fs.existsSync(`./public/download/`)) {
+        // If not, create the directory
+        fs.mkdirSync('./public/download/', { recursive: true });
+      }
+
+      const zipPath = `./public/download/temp.zip`;
+      fs.writeFileSync(zipPath, buffer);
+
+      if (!conf.config.keepFiles) deleteAllFilesFromFolder('./public/content');
+
+      const zip = new AdmZip(zipPath);
+      zip.extractAllTo(outputPath, true);
+
       fs.unlinkSync(zipPath);
-      return;
-  } else {
-    console.log('ZIP file content changed!');
-  }
-
-  if (!conf.config.keepFiles) deleteAllFilesFromFolder('./public/content');
-
-  const zip = new AdmZip(zipPath);
-  zip.extractAllTo(outputPath, true);
-
-  fs.writeFileSync(hashFilePath, currentHash);
-  fs.unlinkSync(zipPath);
+      lastModifiedHeader = newLastModified; // Update the last modified header for the next check
+    }
+  }).end();
 }
 
 function deleteAllFilesFromFolder(directoryPath) {
