@@ -168,8 +168,9 @@ If you want to change certain application settings, like the content interval, H
         "sslCert": "/etc/example/fullchain.pem",
         "sslPort": 3001,
         "useZipDownload": false,
-        "zipURL": "https://example.de/example-content.zip",
-        "zipDownloadIntervall": 60
+        "zipURL": "https://example.com/path/to/content.zip",
+        "zipDownloadIntervall": 60,
+        "keepFiles": false
     }
 }
 ```
