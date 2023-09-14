@@ -114,32 +114,17 @@ To install DreamSignage follow one of the following instructions
   ```
   npm install -g node-windows
   ```
-  ### Step 5: Create a Script to Install the Service
-  We need to create a script that will install a Windows service to run your application. In the root of your project directory, create a new file called `installService.js` and add the following content:
+  ### Step 5: Install the Service
+  Now install the service via this command:
   ```
-  var Service = require('node-windows').Service;
-
-  // Create a new service object
-  var svc = new Service({
-    name:'DreamSignage',
-    description: 'Node.js server for DreamSignage',
-    script: require('path').join(__dirname,'DS.js'),
-  });
-
-  // Listen for the "install" event, which indicates the service is available
-  svc.on('install',function(){
-    svc.start();
-  });
-
-  // Install the script as a service
-  svc.install();
-  ```
-  ### Step 6: Install the Service
-  With your script created, you can now install the service:
-  ```
-  node installService.js
+  node install-service.js
   ```
   Now, your DreamSignage application will start automatically when your computer boots, and it will keep running in the background.
+  ### Step 6: (Optional) Uninstall the Service
+  If you need to uninstall the service you can do this by using the following command:
+  ```
+  node uninstall-service.js
+  ```
 </details>
 
 ## How to use DreamSignage Application
