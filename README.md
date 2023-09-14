@@ -18,7 +18,7 @@ From PDF, PNG, JPG/JPEG, GIF, SVG, WebP, MP4, to WebM, DreamSignage offers an in
 
 
 ## How It Works
-DreamSignage operates by tracking a designated 'content' folder. Any file within this folder (provided it's a supported file type) will be automatically displayed on the software interface. Through websockets, DreamSignage stays responsive to file events, guaranteeing that your content remains current with every change.
+DreamSignage operates by tracking a designated 'content' folder. Any file within this folder (provided it's a supported file type) will be automatically displayed on the website. Through websockets, DreamSignage stays responsive to file events, guaranteeing that your content remains current with every change.
 
 ## Compatibility
 DreamSignage is compatible with all modern web browsers, including Chrome, Firefox, Safari, Edge, and more. The server can be deployed on both Linux and Windows platforms, reinforcing its extensive adaptability.
