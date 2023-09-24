@@ -11,10 +11,10 @@ From PDF, PNG, JPG/JPEG, GIF, SVG, WebP, MP4, to WebM, DreamSignage offers an in
 - **Multi-Site PDF Viewing:** DreamSignage provides a comfortable reading experience by displaying PDF files one page at a time.
 - **Configurable Timer Display:** Adjust the display duration of files to fit your needs with a configurable timer.
 - **Offline & Local Network Capability:** DreamSignage can operate fully offline within a local network.
-- **Automatic ZIP Content Updates:** DreamSignage offers a unique feature to automatically fetch and update content from a remote ZIP file. Centralize your content updates with ease, as DreamSignage periodically checks, downloads, and seamlessly integrates new content from your specified ZIP source, ensuring your displays always stay current.
 - **Websockets Integration:** By utilizing websockets, DreamSignage promptly reacts to file events, updating content automatically with each file change.
 - **Cross-Platform Server Deployment:** The DreamSignage server can be deployed on both Linux and Windows platforms, ensuring comprehensive compatibility.
 - **HTTPS Support:** DreamSignage offers the capability to run securely over HTTPS. This optional feature enables hosting of content with enhanced security, ensuring data is safely transmitted over the network. Elevate your experience with DreamSignage by utilizing the power of HTTPS.
+- **(Optional) Automatic ZIP Content Updates:** DreamSignage offers a unique feature to automatically fetch and update content from a remote ZIP file. Centralize your content updates with ease, as DreamSignage periodically checks, downloads, and seamlessly integrates new content from your specified ZIP source, ensuring your displays always stay current.
 
 
 ## How It Works
